@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text-primary: #064E3B;
+    --text-secondary: #374151;
+    --background-primary: #FFFFFF;
+    --background-secondary: #F9FAFB;
+    --border-color: #E5E7EB;
+  }
+
+  .dark {
+    --text-primary: #ECFDF5;
+    --text-secondary: #D1FAE5;
+    --background-primary: #111827;
+    --background-secondary: #1F2937;
+    --border-color: #374151;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-background-primary text-text-primary transition-colors duration-300 ease-in-out;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-6 py-3 font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-secondary-500 hover:bg-secondary-600 text-white focus:ring-secondary-400;
+  }
+  
+  .btn-accent {
+    @apply btn bg-accent-500 hover:bg-accent-600 text-white focus:ring-accent-400;
+  }
+  
+  .btn-outline {
+    @apply btn border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white focus:ring-primary-500;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-background-secondary rounded-xl shadow-md overflow-hidden border border-border-color transition-all duration-300;
+  }
+  
+  .animate-fade-up {
+    @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
+  }
+  
+  .animate-fade-up.show {
+    @apply opacity-100 translate-y-0;
+  }
+}
