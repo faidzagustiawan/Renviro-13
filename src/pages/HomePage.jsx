@@ -188,19 +188,19 @@ const HomePage = () => {
       <PhotoGallery />
       
       {/* Call to Action */}
-      <section className="py-20 bg-primary-700 dark:bg-primary-800 text-white">
+      <section className="py-20 bg-white dark:bg-gray-800  text-white">
         <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white">
             Bergabunglah dengan Gerakan untuk Indonesia yang Lebih Hijau
           </h2>
-          <p className="text-lg md:text-xl text-primary-100 mb-10 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-3xl mx-auto">
             Bersama-sama, kita bisa menciptakan dampak positif untuk lingkungan dan komunitas kita.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/signup" className="btn bg-white text-primary-700 hover:bg-gray-100 hover:text-primary-800">
+            <Link to="/signup" className="btn-primary">
               Menjadi Relawan
             </Link>
-            <Link to="/dana-hijau" className="btn bg-accent-600 text-white hover:bg-accent-700">
+            <Link to="/dana-hijau" className="btn-outline">
               Dukung Proyek
             </Link>
           </div>
