@@ -4,9 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-    server: {
-    allowedHosts: [
-      '800a-175-45-191-10.ngrok-free.app' // Ganti sesuai dengan subdomain ngrok kamu
-    ]
-  }
-})
+  server: {
+    allowedHosts: ["1c38-180-248-25-167.ngrok-free.app"],
+  },
+});

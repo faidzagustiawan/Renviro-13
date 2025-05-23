@@ -58,6 +58,7 @@ const ImpactStats = () => {
     }
   }, [])
   
+  
   return (
     <section className="py-16 bg-primary-50 dark:bg-primary-900/20">
       <div className="container-custom">

@@ -11,7 +11,7 @@ const photos = [
   },
   {
     id: 2,
-    src: 'https://images.pexels.com/photos/3519667/pexels-photo-3519667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
+    src: 'https://thumb.viva.co.id/media/frontend/thumbs3/2023/04/10/643395e1b3b9b-pantai-kuta-bali_1265_711.jpg',
     alt: 'Pembersihan pantai dari sampah plastik',
     caption: 'Pembersihan Pantai Kuta, Bali'
   },

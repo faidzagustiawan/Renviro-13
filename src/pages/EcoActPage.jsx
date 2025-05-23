@@ -2,113 +2,40 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FiCalendar, FiMapPin, FiUsers, FiFilter, FiChevronDown, FiSearch } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
+import { supabase } from '../services/supabaseClient'
 
-// Data acara contoh
-const eventsData = [
-  {
-    id: 1,
-    title: 'Bersihkan Pantai Kuta dari Sampah Plastik',
-    location: 'Pantai Kuta, Bali',
-    date: '10 Mei 2025',
-    category: 'Pembersihan Pantai',
-    fundingType: 'Fully-funded',
-    quota: 30,
-    registered: 25,
-    image: 'https://images.pexels.com/photos/3519667/pexels-photo-3519667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Bergabunglah dalam upaya membersihkan Pantai Kuta dari sampah plastik yang mencemari keindahan pantai dan membahayakan ekosistem laut.'
-  },
-  {
-    id: 2,
-    title: 'Penanaman 1000 Pohon di Kawasan Gunung Gede',
-    location: 'Gunung Gede, Jawa Barat',
-    date: '15 Mei 2025',
-    category: 'Reboisasi',
-    fundingType: 'Half-funded',
-    quota: 50,
-    registered: 42,
-    image: 'https://images.pexels.com/photos/2990644/pexels-photo-2990644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Ikut serta dalam kegiatan penanaman 1000 pohon untuk menghijaukan kembali kawasan Gunung Gede yang terdampak kebakaran hutan.'
-  },
-  {
-    id: 3,
-    title: 'Workshop Daur Ulang untuk Anak Sekolah',
-    location: 'SDN 03 Menteng, Jakarta',
-    date: '20 Mei 2025',
-    category: 'Edukasi',
-    fundingType: 'Self-funded',
-    quota: 20,
-    registered: 15,
-    image: 'https://images.pexels.com/photos/5650026/pexels-photo-5650026.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Workshop interaktif untuk mengajarkan anak-anak sekolah dasar tentang pentingnya daur ulang dan cara membuat kreasi dari sampah.'
-  },
-  {
-    id: 4,
-    title: 'Pembuatan Biopori untuk Konservasi Air',
-    location: 'Taman Kota, Bandung',
-    date: '25 Mei 2025',
-    category: 'Konservasi Air',
-    fundingType: 'Fully-funded',
-    quota: 25,
-    registered: 18,
-    image: 'https://images.pexels.com/photos/8460348/pexels-photo-8460348.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Pembuatan lubang biopori di area taman kota untuk membantu penyerapan air hujan dan mencegah banjir di Kota Bandung.'
-  },
-  {
-    id: 5,
-    title: 'Pembersihan Sungai Ciliwung',
-    location: 'Sungai Ciliwung, Jakarta',
-    date: '1 Juni 2025',
-    category: 'Pembersihan Sungai',
-    fundingType: 'Half-funded',
-    quota: 40,
-    registered: 28,
-    image: 'https://images.pexels.com/photos/12819795/pexels-photo-12819795.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Kegiatan membersihkan sampah di Sungai Ciliwung untuk mengurangi pencemaran dan mencegah banjir di Jakarta.'
-  },
-  {
-    id: 6,
-    title: 'Tanam Terumbu Karang di Kepulauan Seribu',
-    location: 'Kepulauan Seribu, Jakarta',
-    date: '5 Juni 2025',
-    category: 'Konservasi Laut',
-    fundingType: 'Self-funded',
-    quota: 15,
-    registered: 10,
-    image: 'https://images.pexels.com/photos/3201922/pexels-photo-3201922.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750',
-    description: 'Bergabunglah dalam kegiatan penanaman terumbu karang untuk merehabilitasi ekosistem laut di Kepulauan Seribu.'
-  }
-]
+
 
 const EventCard = ({ event }) => {
   const progress = (event.registered / event.quota) * 100
-  
+
   const fundingTypeClass = {
-    'Fully-funded': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-100',
-    'Half-funded': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-100',
-    'Self-funded': 'bg-gray-100 text-gray-800 dark:bg-gray-700/50 dark:text-gray-100'
+    'Fully-funded': 'bg-green-100 text-green-800 dark:bg-green-900/60 dark:text-green-100',
+    'Half-funded': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/60 dark:text-yellow-100',
+    'Self-funded': 'bg-gray-100 text-gray-800 dark:bg-gray-700/80 dark:text-gray-100'
   }
-  
+
   return (
-    <motion.div 
-      className="card group hover:shadow-lg transition-all duration-300"
+    <motion.div
+      className="card group hover:shadow-lg transition-all duration-300 flex flex-col h-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.05 }}
     >
       <div className="relative overflow-hidden h-48">
-        <img 
-          src={event.image} 
-          alt={event.title} 
+        <img
+          src={event.image}
+          alt={event.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-3 right-3">
-          <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${fundingTypeClass[event.fundingType]}`}>
-            {event.fundingType}
+          <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${fundingTypeClass[event.funding_type]}`}>
+            {event.funding_type}
           </span>
         </div>
       </div>
-      
-      <div className="p-5">
+
+      <div className="flex flex-col flex-grow p-5">
         <div className="flex justify-between items-start mb-2">
           <span className="text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900/30 dark:text-primary-300 px-2.5 py-1 rounded-full">
             {event.category}
@@ -118,20 +45,20 @@ const EventCard = ({ event }) => {
             {event.date}
           </div>
         </div>
-        
+
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
           {event.title}
         </h3>
-        
+
         <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-3">
           <FiMapPin className="mr-1" />
           {event.location}
         </div>
-        
+
         <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
           {event.description}
         </p>
-        
+
         <div className="mb-4">
           <div className="flex justify-between items-center text-sm mb-1">
             <div className="flex items-center text-gray-700 dark:text-gray-300">
@@ -141,15 +68,15 @@ const EventCard = ({ event }) => {
             <span className="font-medium">{event.registered}/{event.quota}</span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
-              className="bg-primary-600 h-2 rounded-full transition-all duration-300" 
-              style={{width: `${progress}%`}}
-            ></div>
+            <div className="bg-primary-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
           </div>
         </div>
-        
-        <Link 
-          to={`/ecoact/${event.id}`} 
+
+        {/* Spacer untuk mendorong tombol ke bawah */}
+        <div className="flex-grow"></div>
+
+        <Link
+          to={`/ecoact/${event.id}`}
           className="w-full block text-center py-2 px-4 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           Bergabung Sekarang
@@ -160,95 +87,105 @@ const EventCard = ({ event }) => {
 }
 
 const EcoActPage = () => {
-  const [events, setEvents] = useState([])
-  const [filteredEvents, setFilteredEvents] = useState([])
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
     category: '',
     fundingType: '',
     location: ''
-  })
-  
-  // Memuat data acara
+  });
+
   useEffect(() => {
-    setEvents(eventsData)
-    setFilteredEvents(eventsData)
-  }, [])
-  
-  // Filter acara berdasarkan pencarian dan filter
+    const fetchEvents = async () => {
+      const { data, error } = await supabase
+        .from("events")
+        .select("*");
+
+      if (error) {
+        console.error("Error fetching events:", error);
+      } else {
+        setEvents(data);
+        setFilteredEvents(data); // Set juga saat pertama kali fetch
+      }
+
+      setLoading(false);
+    };
+
+    fetchEvents();
+  }, []);
+
   useEffect(() => {
-    let results = events
-    
-    // Filter berdasarkan pencarian
+    let results = events;
+
     if (searchTerm) {
-      results = results.filter(event => 
+      results = results.filter(event =>
         event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         event.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
         event.description.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      );
     }
-    
-    // Filter berdasarkan kategori
+
     if (filters.category) {
-      results = results.filter(event => event.category === filters.category)
+      results = results.filter(event => event.category === filters.category);
     }
-    
-    // Filter berdasarkan tipe pendanaan
+
     if (filters.fundingType) {
-      results = results.filter(event => event.fundingType === filters.fundingType)
+      results = results.filter(event => event.fundingType === filters.fundingType);
     }
-    
-    // Filter berdasarkan lokasi
+
     if (filters.location) {
-      results = results.filter(event => event.location.includes(filters.location))
+      results = results.filter(event => event.location.includes(filters.location));
     }
-    
-    setFilteredEvents(results)
-  }, [searchTerm, filters, events])
-  
-  // Mendapatkan opsi unik untuk dropdown filter
-  const getUniqueValues = (key) => {
-    return [...new Set(events.map(event => event[key]))]
-  }
-  
-  // Mengatur filter
+
+    setFilteredEvents(results);
+  }, [searchTerm, filters, events]);
+
+  const getUniqueValues = (key) => [...new Set(events.map(event => event[key]))];
+
   const handleFilterChange = (key, value) => {
     setFilters(prev => ({
       ...prev,
       [key]: value
-    }))
-  }
-  
-  // Reset filter
+    }));
+  };
+
   const resetFilters = () => {
-    setFilters({
-      category: '',
-      fundingType: '',
-      location: ''
-    })
-    setSearchTerm('')
-  }
-  
+    setFilters({ category: '', fundingType: '', location: '' });
+    setSearchTerm('');
+  };
+
+  if (loading) return <p>Loading...</p>;
+
+
   return (
+
     <div className="pt-20 pb-16">
-      {/* Hero Section */}
+
       <div className="relative py-16 bg-primary-700 dark:bg-primary-800">
         <div className="absolute inset-0 overflow-hidden opacity-20">
-          <img 
-            src="https://images.pexels.com/photos/5748320/pexels-photo-5748320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750" 
-            alt="Relawan lingkungan" 
+          <img
+            src="https://images.pexels.com/photos/5748320/pexels-photo-5748320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750"
+            alt="Relawan lingkungan"
             className="w-full h-full object-cover"
           />
         </div>
         <div className="container-custom relative z-10 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            EcoAct - Aksi Nyata untuk Lingkungan
-          </h1>
-          <p className="text-primary-100 max-w-3xl mx-auto text-lg mb-8">
-            Temukan dan bergabunglah dalam berbagai kegiatan relawan lingkungan di seluruh Indonesia. 
-            Dari penanaman pohon hingga edukasi lingkungan, setiap aksi kecil membawa dampak besar.
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }} >
+            {/* Hero Section */}
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              EcoAct - Aksi Nyata untuk Lingkungan
+            </h1>
+            <p className="text-white max-w-3xl mx-auto text-lg mb-8">
+              Temukan dan bergabunglah dalam berbagai kegiatan relawan lingkungan di seluruh Indonesia.
+              Dari penanaman pohon hingga edukasi lingkungan, setiap aksi kecil membawa dampak besar.
+            </p>
+         
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a href="#events" className="btn bg-white text-primary-700 hover:bg-gray-100 hover:text-primary-800">
               Jelajahi Kegiatan
@@ -257,9 +194,11 @@ const EcoActPage = () => {
               Bergabung Sekarang
             </Link>
           </div>
+           </motion.div>
         </div>
       </div>
-      
+
+
       {/* Event Listing */}
       <section id="events" className="py-16">
         <div className="container-custom">
@@ -267,7 +206,7 @@ const EcoActPage = () => {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0">
               Kegiatan yang Tersedia
             </h2>
-            
+
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               className="flex items-center gap-1 text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300"
@@ -277,7 +216,7 @@ const EcoActPage = () => {
               <FiChevronDown className={`transform transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
             </button>
           </div>
-          
+
           {/* Search and Filter */}
           <AnimatePresence>
             {isFilterOpen && (
@@ -308,7 +247,7 @@ const EcoActPage = () => {
                         />
                       </div>
                     </div>
-                    
+
                     <div>
                       <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Kategori
@@ -325,7 +264,7 @@ const EcoActPage = () => {
                         ))}
                       </select>
                     </div>
-                    
+
                     <div>
                       <label htmlFor="fundingType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Tipe Pendanaan
@@ -342,7 +281,7 @@ const EcoActPage = () => {
                         ))}
                       </select>
                     </div>
-                    
+
                     <div>
                       <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Lokasi
@@ -362,7 +301,7 @@ const EcoActPage = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 flex justify-end">
                     <button
                       onClick={resetFilters}
@@ -375,7 +314,7 @@ const EcoActPage = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          
+
           {/* Events Grid */}
           {filteredEvents.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -398,7 +337,7 @@ const EcoActPage = () => {
           )}
         </div>
       </section>
-      
+
       {/* Call to Action */}
       <section className="py-16 bg-primary-50 dark:bg-primary-900/20">
         <div className="container-custom">
@@ -421,9 +360,9 @@ const EcoActPage = () => {
                 </div>
               </div>
               <div className="hidden md:block">
-                <img 
-                  src="https://images.pexels.com/photos/6647037/pexels-photo-6647037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750" 
-                  alt="Kolaborasi lingkungan" 
+                <img
+                  src="https://images.pexels.com/photos/6647037/pexels-photo-6647037.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750"
+                  alt="Kolaborasi lingkungan"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -431,7 +370,7 @@ const EcoActPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </div >
   )
 }
 

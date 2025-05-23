@@ -39,6 +39,8 @@ const Header = () => {
     window.location.reload();
   }
 
+  
+
   const navLinkClasses = ({ isActive }) =>
     `px-3 py-2 text-base font-medium rounded-md transition-colors duration-300 
     ${isActive
@@ -79,7 +81,7 @@ const Header = () => {
           <div className="hidden md:flex md:items-center md:space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="p-2 rounded-full text-primary-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             >
               {theme === 'dark' ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
@@ -91,7 +93,7 @@ const Header = () => {
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <span className="text-gray-700 dark:text-gray-200">{userName}</span>
+                  <span className="text-primary-800 dark:text-gray-200">{userName}</span>
                 </button>
 
                 {isProfileOpen && (
@@ -101,7 +103,7 @@ const Header = () => {
                   >
                     <button
                       onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      className="flex items-center w-full px-4 py-2 text-primary-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                       <FiLogOut className="mr-2" />
                       Logout
@@ -156,10 +158,10 @@ const Header = () => {
               {user ? (
                 <>
 
-                  <span className="px-3 py-2 text-base font-medium rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">{userName}</span>
+                  <span className="px-3 py-2 text-base font-medium rounded-md text-primary-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">{userName}</span>
                   <button
                     onClick={handleLogout}
-                    className="px-3 py-2 text-base font-medium rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left"
+                    className="px-3 py-2 text-base font-medium rounded-md text-primary-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-left"
                   >
                     Logout
                   </button>
@@ -168,7 +170,7 @@ const Header = () => {
                 <>
                   <Link
                     to="/login"
-                    className="px-3 py-2 text-base font-medium rounded-md text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                    className="px-3 py-2 text-base font-medium rounded-md text-primary-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     Masuk
                   </Link>

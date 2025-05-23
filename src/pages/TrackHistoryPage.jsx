@@ -13,7 +13,7 @@ const activitiesData = [
     participants: 28,
     trashCollected: '125 kg',
     status: 'Selesai',
-    image: 'https://images.pexels.com/photos/3519667/pexels-photo-3519667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750'
+    image: 'https://images.pexels.com/photos/3290667/pexels-photo-3290667.jpeg?auto=compress&cs=tinysrgb&w=600'
   },
   {
     id: 2,
@@ -95,7 +95,7 @@ const HistoryPage = () => {
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
               Track History
             </h1>
-            <p className="text-primary-100 max-w-3xl mx-auto text-lg mb-8 text-center">
+            <p className="text-primary-100 max-w-3xl text-white mx-auto text-lg mb-8 text-center">
               Pantau riwayat kontribusi Anda untuk lingkungan, termasuk kegiatan relawan dan donasi yang telah Anda berikan.
             </p>
             
@@ -103,15 +103,15 @@ const HistoryPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
                 <h3 className="text-3xl font-bold text-white mb-2">{totalActivities}</h3>
-                <p className="text-primary-100">Kegiatan Diikuti</p>
+                <p className="text-white">Kegiatan Diikuti</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
                 <h3 className="text-3xl font-bold text-white mb-2">Rp {(totalDonations).toLocaleString('id-ID')}</h3>
-                <p className="text-primary-100">Total Donasi</p>
+                <p className="text-white">Total Donasi</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
                 <h3 className="text-3xl font-bold text-white mb-2">{startDate}</h3>
-                <p className="text-primary-100">Bergabung Sejak</p>
+                <p className="text-white">Bergabung Sejak</p>
               </div>
             </div>
             
@@ -186,7 +186,7 @@ const HistoryPage = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent flex items-end">
                       <div className="p-4">
-                        <span className="px-2 py-1 bg-white/90 text-primary-800 text-xs font-medium rounded-full mb-2 inline-block">
+                        <span className="px-2 py-1 bg-white/20 text-primary-800 text-xs font-medium rounded-full mb-2 inline-block">
                           Relawan
                         </span>
                         <h3 className="text-white font-semibold">{activity.title}</h3>
@@ -206,7 +206,7 @@ const HistoryPage = () => {
                     </div>
                     <Link 
                       to={`/ecoact/${activity.id}`}
-                      className="w-full block text-center py-2 text-sm font-medium text-primary-600 border border-primary-600 rounded-lg hover:bg-primary-50 dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-900/10 transition-colors"
+                      className="w-full block text-center py-2 text-sm font-medium text-primary-600 border border-primary-600 hover:bg-gray-300 dark:hover:bg-white rounded-lg  dark:text-primary-400 dark:border-primary-400 dark:hover:bg-primary-900/10 transition-colors"
                     >
                       Lihat Detail
                     </Link>
@@ -235,7 +235,7 @@ const HistoryPage = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent flex items-end">
                       <div className="p-4">
-                        <span className="px-2 py-1 bg-white/90 text-primary-800 text-xs font-medium rounded-full mb-2 inline-block">
+                        <span className="px-2 py-1 bg-white/0 text-primary-800 text-xs font-medium rounded-full mb-2 inline-block">
                           Donasi
                         </span>
                         <h3 className="text-white font-semibold">{donation.project}</h3>
